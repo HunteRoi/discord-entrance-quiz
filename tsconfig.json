@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@handlers/*": ["handlers/*"],
+      "@types": ["types/index.ts"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["lib/*", "coverage/*", "tcr"]
+}
