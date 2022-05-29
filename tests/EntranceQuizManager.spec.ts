@@ -1,27 +1,30 @@
 import { Client, Intents } from 'discord.js';
 
 import { EntranceQuizManager } from '../src/EntranceQuizManager';
+import { EntranceQuizOptions } from '../src/types';
 
 describe('EntranceQuizManager', () => {
     let client: Client;
-    let questions: any[];
+    let options: EntranceQuizOptions;
 
     beforeEach(() => {
         client = new Client({ intents: [Intents.FLAGS.GUILDS] });
         client.removeAllListeners();
 
-        questions = [];
+        options = {
+            quizEntries: [
+                {}
+            ]
+        };
     });
 
-    it('should throw an error when client is null', () => {
-        expect(() => new EntranceQuizManager(null)).toThrowError('You must provide a client!');
-    });
-
-    it('should throw an error when the quiz questions are not provided', () => {
-        expect(() => new EntranceQuizManager(client, null)).toThrowError('You must provide questions!');
+    it('should throw an error when the quiz entries are empty', () => {
+        expect(() => new EntranceQuizManager(client)).toThrowError('You must provide quiz entries!');
     });
 
     it('should not throw', () => {
-        expect(() => new EntranceQuizManager(client, questions)).not.toThrow();
+        expect(() => new EntranceQuizManager(client, options)).not.toThrow();
     });
+
+
 });
