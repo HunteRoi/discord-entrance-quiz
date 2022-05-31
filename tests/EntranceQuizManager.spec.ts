@@ -1,7 +1,7 @@
 import { Client, Intents } from 'discord.js';
 
 import { EntranceQuizManager } from '../src/EntranceQuizManager';
-import { EntranceQuizOptions } from '../src/types';
+import { EntranceQuizOptions, QuizEntry } from '../src/types';
 
 describe('EntranceQuizManager', () => {
     let client: Client;
@@ -12,8 +12,13 @@ describe('EntranceQuizManager', () => {
         client.removeAllListeners();
 
         options = {
+            useDM: true,
             quizEntries: [
-                {}
+                {
+                    question: 'How old are you?',
+                    responseType: 'number',
+                    parser: value => Number(value)
+                }
             ]
         };
     });
@@ -26,5 +31,9 @@ describe('EntranceQuizManager', () => {
         expect(() => new EntranceQuizManager(client, options)).not.toThrow();
     });
 
+    describe('startQuiz', () => {
+        it('should await a response for the first quiz entry', () => {
 
+        });
+    });
 });
