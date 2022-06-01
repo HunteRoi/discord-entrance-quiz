@@ -5,8 +5,6 @@
  * @enum {string}
  */
 export enum EntranceQuizManagerEvents {
-    startQuiz = 'startQuiz',
-    receiveQuizEntry = 'receiveQuizEntry',
-    stopQuiz = 'stopQuiz',
-    error = 'error',
+  sendFormButton = 'sendFormButton',
+  quizAnswered = 'quizAnswered',
 }
