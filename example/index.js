@@ -1,6 +1,6 @@
 const { Client, Intents, Constants } = require('discord.js');
 
-const { FormManager } = require('../lib');
+const { FormManager, FormManagerEvents } = require('../lib');
 
 const client = new Client({
   intents: [Intents.FLAGS.DIRECT_MESSAGES],
@@ -11,7 +11,6 @@ const manager = new FormManager(client, {
   formTitle: 'Quiz Form',
   formResponseWhenSubmitted: 'Participation registered.',
   introductionMessage: 'Take our quiz and try to win a reward!',
-  useDM: true,
   formEntries: [
     {
       label: 'How old are you?',
@@ -35,5 +34,15 @@ client.on('messageCreate', async (message) => {
     await manager.sendFormButtonTo(message.author);
   }
 });
+
+manager.on(FormManagerEvents.sendFormButton, (user) =>
+  console.log(`Form sent to ${user.username}`)
+);
+manager.on(FormManagerEvents.formOpen, (user) =>
+  console.log(`Form opened by ${user.username}`)
+);
+manager.on(FormManagerEvents.formSubmit, (entries, user) =>
+  console.log(`Answers from ${user.username}`, entries)
+);
 
 client.login('TOKEN');

@@ -11,5 +11,5 @@
     "baseUrl": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["lib/*", "coverage/*", "tcr"]
+  "exclude": ["lib/*"]
 }

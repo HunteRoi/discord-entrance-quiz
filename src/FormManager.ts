@@ -9,20 +9,48 @@ import {
 } from 'discord.js';
 import EventEmitter from 'events';
 
-import { FormOptions, FormEntry } from './types';
+import { FormManagerOptions, FormEntry } from './types';
 import { OneToFiveElements } from './types/OneToFiveElements';
 import { handleFormOpen, handleFormSubmit } from './handlers';
 import { FormManagerEvents } from './FormManagerEvents';
 
+/**
+ * A manager to send a form to users through DM.
+ *
+ * @class FormManager
+ * @extends {EventEmitter}
+ */
 export class FormManager extends EventEmitter {
+  /**
+   * The Discord client.
+   *
+   * @type {Client}
+   * @memberof FormManager
+   */
   public readonly client!: Client;
-  public readonly options: FormOptions;
 
+  /**
+   * The manager options
+   *
+   * @type {FormManagerOptions}
+   * @memberof FormManager
+   */
+  public readonly options: FormManagerOptions;
+
+  /**
+   * Creates an instance of {@link FormManager}.
+   * @param {Client} client
+   * @param {FormManagerOptions} [options={
+   *       formEntries: [],
+   *       buttonLabel: 'TAKE QUIZ',
+   *       formTitle: 'Quiz Form',
+   *       formResponseWhenSubmitted: 'Participation registered!',
+   *     }]
+   */
   constructor(
     client: Client,
-    options: FormOptions = {
+    options: FormManagerOptions = {
       formEntries: [],
-      useDM: true,
       buttonLabel: 'TAKE QUIZ',
       formTitle: 'Quiz Form',
       formResponseWhenSubmitted: 'Participation registered!',
@@ -46,11 +74,11 @@ export class FormManager extends EventEmitter {
     }
 
     const intents = new Intents(client.options.intents);
-    if (options.useDM) {
-      if (!intents.has(Intents.FLAGS.DIRECT_MESSAGES))
-        throw new Error('Intent DIRECT_MESSAGES is missing for DM feature.');
-      if (!client.options.partials?.includes('CHANNEL'))
-        throw new Error('Partial CHANNEL is missing for DM feature.');
+    if (!intents.has(Intents.FLAGS.DIRECT_MESSAGES)) {
+      throw new Error('Intent DIRECT_MESSAGES is missing.');
+    }
+    if (!client.options.partials?.includes('CHANNEL')) {
+      throw new Error('Partial CHANNEL is missing.');
     }
 
     this.client = client;
@@ -68,26 +96,53 @@ export class FormManager extends EventEmitter {
     );
   }
 
+  /**
+   * Sends a button message in the user's DM.
+   *
+   * @param {User} user the user
+   */
   public async sendFormButtonTo(user: User) {
-    this.emit(FormManagerEvents.sendFormButton);
-
     const openFormComponent = new MessageButton()
       .setLabel(this.options.buttonLabel)
       .setStyle('PRIMARY')
       .setCustomId(`form-start-${user.id}`);
     const actionRow = new MessageActionRow().addComponents(openFormComponent);
 
-    if (this.options.useDM) {
-      const message =
-        !this.options.introductionMessage ||
-        typeof this.options.introductionMessage === 'string'
-          ? {
-              content: this.options.introductionMessage,
-              components: [actionRow],
-            }
-          : { ...this.options.introductionMessage, components: [actionRow] };
+    const message =
+      !this.options.introductionMessage ||
+      typeof this.options.introductionMessage === 'string'
+        ? {
+            content: this.options.introductionMessage,
+            components: [actionRow],
+          }
+        : { ...this.options.introductionMessage, components: [actionRow] };
 
-      await user.send(message);
-    }
+    await user.send(message);
+    this.emit(FormManagerEvents.sendFormButton, user);
   }
 }
+
+/**
+ * Emitted when the form button is sent.
+ * @event FormManager#sendFormButton
+ * @param {User} user
+ * @example
+ * manager.on(FormManagerEvents.sendFormButton, (user) => console.log(`Form sent to ${user.username}!`));
+ */
+
+/**
+ * Emitted when the form button is clicked.
+ * @event FormManager#formOpen
+ * @param {User} user
+ * @example
+ * manager.on(FormManagerEvents.formOpen, (user) => console.log(`Form opened by ${user.username}!`));
+ */
+
+/**
+ * Emitted when the form answers are submitted.
+ * @event FormManager#formSubmit
+ * @param {FormEntry[]} formEntriesWithAnswers
+ * @param {User} user
+ * @example
+ * manager.on(FormManagerEvents.sendFormButton, (entries, user) => console.log(`Form answers submitted by ${user.username}!`, entries));
+ */

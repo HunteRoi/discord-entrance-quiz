@@ -1,2 +1,2 @@
-export * from './FormOptions';
+export * from './FormManagerOptions';
 export * from './FormEntry';

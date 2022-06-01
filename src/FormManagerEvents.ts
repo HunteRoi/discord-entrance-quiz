@@ -5,6 +5,18 @@
  * @enum {string}
  */
 export enum FormManagerEvents {
+  /**
+   * Event emitted to notify that the form button has been sent.
+   */
   sendFormButton = 'sendFormButton',
-  formAnswered = 'formAnswered',
+
+  /**
+   * Event emitted to notify that the form button has been clicked.
+   */
+  formOpen = 'formOpen',
+
+  /**
+   * Event emitted to notify that the form answers have been submitted.
+   */
+  formSubmit = 'formSubmit',
 }

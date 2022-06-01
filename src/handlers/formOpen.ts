@@ -6,19 +6,18 @@ import {
   TextInputComponent,
 } from 'discord.js';
 
-import { FormManager } from '..';
+import { FormManager, FormManagerEvents } from '..';
 
 export const handleFormOpen = async (
   manager: FormManager,
   interaction: ButtonInteraction
 ) => {
-  const userid = interaction.user.id;
-
-  if (interaction.customId !== `form-start-${userid}`) return;
+  const user = interaction.user;
+  if (interaction.customId !== `form-start-${user.id}`) return;
 
   const modal = new Modal()
     .setTitle(manager.options.formTitle)
-    .setCustomId(`form-${userid}`);
+    .setCustomId(`form-${user.id}`);
 
   for (const entry of manager.options.formEntries) {
     const input = new TextInputComponent({
@@ -28,5 +27,7 @@ export const handleFormOpen = async (
       new MessageActionRow<ModalActionRowComponent>().addComponents(input);
     modal.addComponents(actionRow);
   }
+
   await interaction.showModal(modal);
+  manager.emit(FormManagerEvents.formOpen, user);
 };
