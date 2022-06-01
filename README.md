@@ -3,7 +3,7 @@
 
 # discord-entrance-quiz
 
-A manager that lets you quiz people on their arrival on your guild. It is actually just like the Sphinx! Built with DiscordJS.
+A manager that lets you quiz people. It is actually just like the Sphinx! Built with DiscordJS.
 
 ![IMAGE](./assets/example.gif)
 

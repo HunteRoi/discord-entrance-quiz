@@ -8,11 +8,7 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@handlers/*": ["handlers/*"],
-      "@types": ["types/index.ts"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["src/**/*"],
   "exclude": ["lib/*", "coverage/*", "tcr"]
