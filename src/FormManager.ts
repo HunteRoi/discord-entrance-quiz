@@ -9,19 +9,19 @@ import {
 } from 'discord.js';
 import EventEmitter from 'events';
 
-import { EntranceQuizOptions, QuizEntry } from './types';
+import { FormOptions, FormEntry } from './types';
 import { OneToFiveElements } from './types/OneToFiveElements';
 import { handleFormOpen, handleFormSubmit } from './handlers';
-import { EntranceQuizManagerEvents } from './EntranceQuizManagerEvents';
+import { FormManagerEvents } from './FormManagerEvents';
 
-export class EntranceQuizManager extends EventEmitter {
+export class FormManager extends EventEmitter {
   public readonly client!: Client;
-  public readonly options: EntranceQuizOptions;
+  public readonly options: FormOptions;
 
   constructor(
     client: Client,
-    options: EntranceQuizOptions = {
-      quizEntries: [],
+    options: FormOptions = {
+      formEntries: [],
       useDM: true,
       buttonLabel: 'TAKE QUIZ',
       formTitle: 'Quiz Form',
@@ -32,17 +32,17 @@ export class EntranceQuizManager extends EventEmitter {
 
     if (!client) throw new Error('You must provide a client!');
     if (!options) throw new Error('You must provide options!');
-    if (!options.quizEntries || options.quizEntries.length === 0)
-      throw new Error('You must provide quiz entries!');
+    if (!options.formEntries || options.formEntries.length === 0)
+      throw new Error('You must provide form entries!');
 
-    if (options.quizEntries.length > 5) {
+    if (options.formEntries.length > 5) {
       console.warn(
         'You cannot have more than 5 entries. The additional will be ignore.'
       );
-      options.quizEntries = options.quizEntries.splice(
+      options.formEntries = options.formEntries.splice(
         0,
         5
-      ) as OneToFiveElements<QuizEntry>;
+      ) as OneToFiveElements<FormEntry>;
     }
 
     const intents = new Intents(client.options.intents);
@@ -69,7 +69,7 @@ export class EntranceQuizManager extends EventEmitter {
   }
 
   public async sendFormButtonTo(user: User) {
-    this.emit(EntranceQuizManagerEvents.sendFormButton);
+    this.emit(FormManagerEvents.sendFormButton);
 
     const openFormComponent = new MessageButton()
       .setLabel(this.options.buttonLabel)

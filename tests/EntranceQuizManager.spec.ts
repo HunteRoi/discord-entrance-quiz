@@ -1,12 +1,12 @@
 import { Client, Intents, Constants } from 'discord.js';
 
-import { EntranceQuizManager } from '../src/EntranceQuizManager';
-import { EntranceQuizOptions } from '../src/types';
+import { FormManager } from '../src/FormManager';
+import { FormOptions } from '../src/types';
 
-describe('EntranceQuizManager', () => {
+describe('FormManager', () => {
   let client: Client;
-  let options: EntranceQuizOptions;
-  let manager: EntranceQuizManager;
+  let options: FormOptions;
+  let manager: FormManager;
 
   beforeEach(() => {
     client = new Client({
@@ -17,10 +17,10 @@ describe('EntranceQuizManager', () => {
 
     options = {
       buttonLabel: 'TAKE QUIZ',
-      formTitle: 'Quiz',
+      formTitle: 'Quiz Form',
       formResponseWhenSubmitted: 'Participation registered!',
       useDM: true,
-      quizEntries: [
+      formEntries: [
         {
           customId: 'age',
           label: 'How old are you?',
@@ -31,17 +31,17 @@ describe('EntranceQuizManager', () => {
       ],
     };
 
-    manager = new EntranceQuizManager(client, options);
+    manager = new FormManager(client, options);
   });
 
-  it('should throw an error when the quiz entries are empty', () => {
-    expect(() => new EntranceQuizManager(client)).toThrowError(
-      'You must provide quiz entries!'
+  it('should throw an error when the form entries are empty', () => {
+    expect(() => new FormManager(client)).toThrowError(
+      'You must provide form entries!'
     );
   });
 
   it('should not throw', () => {
-    expect(() => new EntranceQuizManager(client, options)).not.toThrow();
+    expect(() => new FormManager(client, options)).not.toThrow();
   });
 
   // cannot test more due to Discord not being mockable :'(

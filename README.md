@@ -1,7 +1,7 @@
-<a href="https://www.npmjs.com/@hunteroi/discord-entrance-quiz"><img src="https://img.shields.io/github/v/release/hunteroi/discord-entrance-quiz?style=for-the-badge" alt="release version"/></a>
-<a href="https://www.npmjs.com/@hunteroi/discord-entrance-quiz"><img src="https://img.shields.io/npm/dt/@hunteroi/discord-entrance-quiz?style=for-the-badge" alt="nb downloads npm"/></a>
+<a href="https://www.npmjs.com/@hunteroi/discord-form"><img src="https://img.shields.io/github/v/release/hunteroi/discord-form?style=for-the-badge" alt="release version"/></a>
+<a href="https://www.npmjs.com/@hunteroi/discord-form"><img src="https://img.shields.io/npm/dt/@hunteroi/discord-form?style=for-the-badge" alt="nb downloads npm"/></a>
 
-# discord-entrance-quiz
+# discord-form
 
 A manager that lets you quiz people. It is actually just like the Sphinx! Built with DiscordJS.
 
@@ -12,7 +12,7 @@ See [./example/index.js](./example/index.js).
 ## Installation
 
 ```sh
-npm install --save @hunteroi/discord-entrance-quiz
+npm install --save @hunteroi/discord-form
 ```
 
 ## Prerequisites ⚠️

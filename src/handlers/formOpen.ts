@@ -6,10 +6,10 @@ import {
   TextInputComponent,
 } from 'discord.js';
 
-import { EntranceQuizManager } from '..';
+import { FormManager } from '..';
 
 export const handleFormOpen = async (
-  manager: EntranceQuizManager,
+  manager: FormManager,
   interaction: ButtonInteraction
 ) => {
   const userid = interaction.user.id;
@@ -20,7 +20,7 @@ export const handleFormOpen = async (
     .setTitle(manager.options.formTitle)
     .setCustomId(`form-${userid}`);
 
-  for (const entry of manager.options.quizEntries) {
+  for (const entry of manager.options.formEntries) {
     const input = new TextInputComponent({
       ...entry,
     });

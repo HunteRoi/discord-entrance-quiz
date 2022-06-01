@@ -1,12 +1,12 @@
 import { Message, ModalSubmitInteraction } from 'discord.js';
 
-import { EntranceQuizManager, EntranceQuizManagerEvents } from '..';
+import { FormManager, FormManagerEvents } from '..';
 
 export const handleFormSubmit = async (
-  manager: EntranceQuizManager,
+  manager: FormManager,
   interaction: ModalSubmitInteraction
 ) => {
-  const quizEntriesWithAnswers = manager.options.quizEntries.map((entry) => ({
+  const formEntriesWithAnswers = manager.options.formEntries.map((entry) => ({
     ...entry,
     answer: entry.parser(interaction.fields.getTextInputValue(entry.customId)),
   }));
@@ -22,8 +22,8 @@ export const handleFormSubmit = async (
   await (interaction.message as Message<boolean>).edit(message);
 
   manager.emit(
-    EntranceQuizManagerEvents.quizAnswered,
-    quizEntriesWithAnswers,
+    FormManagerEvents.formAnswered,
+    formEntriesWithAnswers,
     interaction.user
   );
 };

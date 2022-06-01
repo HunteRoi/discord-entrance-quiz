@@ -1,2 +1,2 @@
-export * from './EntranceQuizOptions';
-export * from './QuizEntry';
+export * from './FormOptions';
+export * from './FormEntry';

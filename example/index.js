@@ -1,18 +1,18 @@
 const { Client, Intents, Constants } = require('discord.js');
 
-const { EntranceQuizManager } = require('../lib');
+const { FormManager } = require('../lib');
 
 const client = new Client({
   intents: [Intents.FLAGS.DIRECT_MESSAGES],
   partials: [Constants.PartialTypes.CHANNEL],
 });
-const manager = new EntranceQuizManager(client, {
+const manager = new FormManager(client, {
   buttonLabel: 'TAKE QUIZ',
   formTitle: 'Quiz Form',
   formResponseWhenSubmitted: 'Participation registered.',
   introductionMessage: 'Take our quiz and try to win a reward!',
   useDM: true,
-  quizEntries: [
+  formEntries: [
     {
       label: 'How old are you?',
       parser: (value) => Number(value),

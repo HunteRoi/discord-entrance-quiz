@@ -1,3 +1,3 @@
-export * from './EntranceQuizManager';
-export * from './EntranceQuizManagerEvents';
+export * from './FormManager';
+export * from './FormManagerEvents';
 export * from './types';

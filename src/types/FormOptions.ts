@@ -1,9 +1,9 @@
 import { MessageOptions, MessageEditOptions } from 'discord.js';
 import { OneToFiveElements } from './OneToFiveElements';
-import { QuizEntry } from './QuizEntry';
+import { FormEntry } from './FormEntry';
 
-export interface EntranceQuizOptions {
-  quizEntries: OneToFiveElements<QuizEntry>;
+export interface FormOptions {
+  formEntries: OneToFiveElements<FormEntry>;
   useDM: boolean;
   buttonLabel: string;
   formTitle: string;

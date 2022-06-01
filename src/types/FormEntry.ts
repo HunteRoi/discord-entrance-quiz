@@ -1,6 +1,6 @@
 import { TextInputComponentOptions } from 'discord.js';
 
-export interface QuizEntryBase<T>
+export interface FormEntryBase<T>
   extends Omit<TextInputComponentOptions, 'label' & 'value' & 'customId'> {
   customId: string;
   label: string;
@@ -8,14 +8,14 @@ export interface QuizEntryBase<T>
   parser: (answer: string) => T;
 }
 
-export interface BooleanQuizEntry extends QuizEntryBase<boolean> {
+export interface BooleanFormEntry extends FormEntryBase<boolean> {
   responseType: 'boolean';
 }
-export interface StringQuizEntry extends QuizEntryBase<string> {
+export interface StringFormEntry extends FormEntryBase<string> {
   responseType: 'string';
 }
-export interface NumberQuizEntry extends QuizEntryBase<number> {
+export interface NumberFormEntry extends FormEntryBase<number> {
   responseType: 'number';
 }
 
-export type QuizEntry = BooleanQuizEntry | StringQuizEntry | NumberQuizEntry;
+export type FormEntry = BooleanFormEntry | StringFormEntry | NumberFormEntry;
