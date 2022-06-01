@@ -1,7 +1,7 @@
 import { TextInputComponentOptions } from 'discord.js';
 
 /**
- * A form entry
+ * A form entry.
  *
  * @interface FormEntryBase
  * @extends {(Omit<TextInputComponentOptions, 'label' & 'value' & 'customId'>)}
@@ -41,9 +41,12 @@ export interface FormEntryBase<T>
   answer?: T;
 }
 
+/**
+ * A form entry that requires a boolean answer.
+ */
 export interface BooleanFormEntry extends FormEntryBase<boolean> {
   /**
-   * The expected type
+   * The expected type.
    *
    * @type {'boolean'}
    * @memberof BooleanFormEntry
@@ -51,6 +54,9 @@ export interface BooleanFormEntry extends FormEntryBase<boolean> {
   responseType: 'boolean';
 }
 
+/**
+ * A form entry that requires a string answer.
+ */
 export interface StringFormEntry extends FormEntryBase<string> {
   /**
    * The expected type.
@@ -61,6 +67,9 @@ export interface StringFormEntry extends FormEntryBase<string> {
   responseType: 'string';
 }
 
+/**
+ * A form entry that requires a number answer.
+ */
 export interface NumberFormEntry extends FormEntryBase<number> {
   /**
    * The expected type.
@@ -71,4 +80,7 @@ export interface NumberFormEntry extends FormEntryBase<number> {
   responseType: 'number';
 }
 
+/**
+ * A form entry, either boolean, string or number.
+ */
 export type FormEntry = BooleanFormEntry | StringFormEntry | NumberFormEntry;

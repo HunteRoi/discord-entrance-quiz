@@ -6,12 +6,18 @@ import {
   Interaction,
   User,
   Constants,
+  ButtonInteraction,
+  Modal,
+  TextInputComponent,
+  ModalActionRowComponent,
+  MessageEditOptions,
+  ModalSubmitInteraction,
+  Message,
 } from 'discord.js';
 import EventEmitter from 'events';
 
 import { FormManagerOptions, FormEntry } from './types';
 import { OneToFiveElements } from './types/OneToFiveElements';
-import { handleFormOpen, handleFormSubmit } from './handlers';
 import { FormManagerEvents } from './FormManagerEvents';
 
 /**
@@ -30,7 +36,7 @@ export class FormManager extends EventEmitter {
   public readonly client!: Client;
 
   /**
-   * The manager options
+   * The manager options.
    *
    * @type {FormManagerOptions}
    * @memberof FormManager
@@ -88,9 +94,9 @@ export class FormManager extends EventEmitter {
       Constants.Events.INTERACTION_CREATE,
       async (interaction: Interaction) => {
         if (interaction.isButton()) {
-          await handleFormOpen(this, interaction);
+          await this.handleFormOpen(interaction);
         } else if (interaction.isModalSubmit()) {
-          await handleFormSubmit(this, interaction);
+          await this.handleFormSubmit(interaction);
         }
       }
     );
@@ -119,6 +125,77 @@ export class FormManager extends EventEmitter {
 
     await user.send(message);
     this.emit(FormManagerEvents.sendFormButton, user);
+  }
+
+  /**
+   * Handles the opening of the form modal.
+   *
+   * @private
+   * @param {ButtonInteraction} interaction
+   */
+  private async handleFormOpen(interaction: ButtonInteraction) {
+    const user = interaction.user;
+    if (interaction.customId !== `form-start-${user.id}`) return;
+
+    const modal = new Modal()
+      .setTitle(this.options.formTitle)
+      .setCustomId(`form-${user.id}`);
+
+    for (const entry of this.options.formEntries) {
+      const input = new TextInputComponent({
+        ...entry,
+      });
+      const actionRow =
+        new MessageActionRow<ModalActionRowComponent>().addComponents(input);
+      modal.addComponents(actionRow);
+    }
+
+    await interaction.showModal(modal);
+    this.emit(FormManagerEvents.formOpen, user);
+  }
+
+  /**
+   * Handles the submitted form.
+   *
+   * @private
+   * @param {ModalSubmitInteraction} interaction
+   */
+  private async handleFormSubmit(interaction: ModalSubmitInteraction) {
+    const user = interaction.user;
+    if (interaction.customId !== `form-${user.id}`) return;
+
+    await interaction.deferReply();
+
+    const formEntriesWithAnswers = this.options.formEntries.map(
+      (entry) =>
+        ({
+          ...entry,
+          answer: entry.parser(
+            interaction.fields.getTextInputValue(entry.customId)
+          ),
+        } as FormEntry)
+    );
+
+    const message: MessageEditOptions =
+      typeof this.options.formResponseWhenSubmitted === 'string'
+        ? {
+            content: this.options.formResponseWhenSubmitted,
+            components: [],
+          }
+        : {
+            ...this.options.formResponseWhenSubmitted,
+            components: [],
+          };
+    if (this.options.canRetakeForm) {
+      delete message.components;
+    }
+
+    await interaction.deleteReply();
+    await (interaction.message as Message<boolean>).edit(
+      message as MessageEditOptions
+    );
+
+    this.emit(FormManagerEvents.formSubmit, formEntriesWithAnswers, user);
   }
 }
 

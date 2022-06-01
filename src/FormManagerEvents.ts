@@ -1,5 +1,5 @@
 /**
- * Events fired by the {@link FormManager}
+ * Events fired by the {@link FormManager}.
  *
  * @export
  * @enum {string}

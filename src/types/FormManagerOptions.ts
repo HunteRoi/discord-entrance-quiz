@@ -3,7 +3,7 @@ import { OneToFiveElements } from './OneToFiveElements';
 import { FormEntry } from './FormEntry';
 
 /**
- * The manager options
+ * The manager options.
  *
  * @interface FormManagerOptions
  */
