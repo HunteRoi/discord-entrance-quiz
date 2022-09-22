@@ -1,10 +1,10 @@
-const { Client, Intents, Constants } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
 
 const { FormManager, FormManagerEvents } = require('../lib');
 
 const client = new Client({
-  intents: [Intents.FLAGS.DIRECT_MESSAGES],
-  partials: [Constants.PartialTypes.CHANNEL],
+  intents: [GatewayIntentBits.DirectMessages],
+  partials: [Partials.Channel],
 });
 const manager = new FormManager(client, {
   buttonLabel: 'TAKE QUIZ',

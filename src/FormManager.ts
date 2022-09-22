@@ -1,22 +1,23 @@
 import {
-  Client,
-  Intents,
-  MessageActionRow,
-  MessageButton,
-  Interaction,
-  User,
-  Constants,
+  ActionRowBuilder,
+  ButtonBuilder,
   ButtonInteraction,
-  Modal,
-  TextInputComponent,
-  ModalActionRowComponent,
-  MessageEditOptions,
-  ModalSubmitInteraction,
+  ButtonStyle,
+  Client,
+  GatewayIntentBits,
+  IntentsBitField,
+  Interaction,
   Message,
+  MessageEditOptions,
+  ModalBuilder,
+  ModalSubmitInteraction,
+  Partials,
+  TextInputBuilder,
+  User,
 } from 'discord.js';
 import EventEmitter from 'events';
 
-import { FormManagerOptions, FormEntry } from './types';
+import { FormEntry, FormManagerOptions } from './types';
 import { OneToFiveElements } from './types/OneToFiveElements';
 import { FormManagerEvents } from './FormManagerEvents';
 
@@ -70,8 +71,9 @@ export class FormManager extends EventEmitter {
       throw new Error('You must provide form entries!');
 
     if (options.formEntries.length > 5) {
+      // tslint:disable-next-line:no-console
       console.warn(
-        'You cannot have more than 5 entries. The additional will be ignore.'
+        'You cannot have more than 5 entries. The additional will be ignored.'
       );
       options.formEntries = options.formEntries.splice(
         0,
@@ -79,27 +81,24 @@ export class FormManager extends EventEmitter {
       ) as OneToFiveElements<FormEntry>;
     }
 
-    const intents = new Intents(client.options.intents);
-    if (!intents.has(Intents.FLAGS.DIRECT_MESSAGES)) {
+    const intents = new IntentsBitField(client.options.intents);
+    if (!intents.has(GatewayIntentBits.DirectMessages)) {
       throw new Error('Intent DIRECT_MESSAGES is missing.');
     }
-    if (!client.options.partials?.includes('CHANNEL')) {
+    if (!client.options.partials?.includes(Partials.Channel)) {
       throw new Error('Partial CHANNEL is missing.');
     }
 
     this.client = client;
     this.options = options;
 
-    this.client.on(
-      Constants.Events.INTERACTION_CREATE,
-      async (interaction: Interaction) => {
-        if (interaction.isButton()) {
-          await this.handleFormOpen(interaction);
-        } else if (interaction.isModalSubmit()) {
-          await this.handleFormSubmit(interaction);
-        }
+    this.client.on('interactionCreate', async (interaction: Interaction) => {
+      if (interaction.isButton()) {
+        await this.handleFormOpen(interaction);
+      } else if (interaction.isModalSubmit()) {
+        await this.handleFormSubmit(interaction);
       }
-    );
+    });
   }
 
   /**
@@ -108,11 +107,13 @@ export class FormManager extends EventEmitter {
    * @param {User} user the user
    */
   public async sendFormButtonTo(user: User) {
-    const openFormComponent = new MessageButton()
+    const openFormComponent = new ButtonBuilder()
       .setLabel(this.options.buttonLabel)
-      .setStyle('PRIMARY')
+      .setStyle(ButtonStyle.Primary)
       .setCustomId(`form-start-${user.id}`);
-    const actionRow = new MessageActionRow().addComponents(openFormComponent);
+    const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      openFormComponent
+    );
 
     const message =
       !this.options.introductionMessage ||
@@ -137,16 +138,17 @@ export class FormManager extends EventEmitter {
     const user = interaction.user;
     if (interaction.customId !== `form-start-${user.id}`) return;
 
-    const modal = new Modal()
+    const modal = new ModalBuilder()
       .setTitle(this.options.formTitle)
       .setCustomId(`form-${user.id}`);
 
     for (const entry of this.options.formEntries) {
-      const input = new TextInputComponent({
+      const input = new TextInputBuilder({
         ...entry,
       });
-      const actionRow =
-        new MessageActionRow<ModalActionRowComponent>().addComponents(input);
+      const actionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(
+        input
+      );
       modal.addComponents(actionRow);
     }
 

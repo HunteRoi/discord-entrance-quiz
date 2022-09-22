@@ -1,14 +1,14 @@
-import { TextInputComponentOptions } from 'discord.js';
+import { TextInputComponentData } from 'discord.js';
 
 /**
  * A form entry.
  *
  * @interface FormEntryBase
- * @extends {(Omit<TextInputComponentOptions, 'label' & 'value' & 'customId'>)}
+ * @extends {(Omit<TextInputComponentData, 'label' & 'value' & 'customId'>)}
  * @template T
  */
 export interface FormEntryBase<T>
-  extends Omit<TextInputComponentOptions, 'label' & 'value' & 'customId'> {
+  extends Omit<TextInputComponentData, 'label' & 'value' & 'customId'> {
   /**
    * The id of the entry.
    *
