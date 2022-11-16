@@ -1,4 +1,4 @@
-import { MessageOptions, MessageEditOptions } from 'discord.js';
+import { MessageCreateOptions, MessageEditOptions } from 'discord.js';
 import { OneToFiveElements } from './OneToFiveElements';
 import { FormEntry } from './FormEntry';
 
@@ -32,9 +32,9 @@ export interface FormManagerOptions {
   /**
    * The message sent with the button component.
    *
-   * @type {(string | MessageOptions)}
+   * @type {(string | MessageCreateOptions)}
    */
-  introductionMessage?: string | MessageOptions;
+  introductionMessage?: string | MessageCreateOptions;
 
   /**
    * The message sent when a form is submitted.

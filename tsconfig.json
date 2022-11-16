@@ -8,7 +8,8 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["lib/*"]

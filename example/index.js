@@ -1,10 +1,10 @@
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, IntentsBitField, Partials, ButtonStyle, TextInputStyle } = require('discord.js');
 
 const { FormManager, FormManagerEvents } = require('../lib');
 
 const client = new Client({
-  intents: [GatewayIntentBits.DirectMessages],
-  partials: [Partials.Channel],
+  intents: [IntentsBitField.Flags.DirectMessages],
+  partials: [Partials.Channel, Partials.Message],
 });
 const manager = new FormManager(client, {
   buttonLabel: 'TAKE QUIZ',
@@ -16,7 +16,7 @@ const manager = new FormManager(client, {
       label: 'How old are you?',
       parser: (value) => Number(value),
       responseType: 'number',
-      style: 'SHORT',
+      style: TextInputStyle.Short,
       maxLength: 3,
       minLength: 1,
       required: true,
