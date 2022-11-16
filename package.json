@@ -1,6 +1,6 @@
 {
   "name": "@hunteroi/discord-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A manager to question people in DM or via a thread channel. Built with DiscordJS.",
   "main": "lib/index.js",
   "scripts": {
