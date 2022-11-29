@@ -7,7 +7,7 @@ A manager that lets you quiz people. It is actually just like the Sphinx! Built 
 
 ![IMAGE](https://raw.githubusercontent.com/HunteRoi/discord-form/master/assets/example.gif)
 
-See [./example/index.js](https://github.com/hunteroi/discord-form/tree/master/example/index.js).
+See [./examples/index.js](https://github.com/hunteroi/discord-form/tree/master/examples/index.js).
 
 ## Installation
 

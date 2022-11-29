@@ -12,7 +12,7 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*"],
-  "exclude": ["lib/*", "node_modules/**"],
+  "exclude": ["lib/*", "node_modules/*"],
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "docs/api-docs",
