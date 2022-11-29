@@ -5,6 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
+    "build:docs": "typedoc",
+    "prepublish": "yarn build:docs",
     "lint": "tslint -p tsconfig.json",
     "start": "yarn build & node ./example/index.js"
   },
@@ -41,6 +43,7 @@
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
+    "typedoc": "^0.23.21",
     "typescript": "^4.8.4"
   }
 }
