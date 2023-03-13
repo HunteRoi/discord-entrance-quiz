@@ -1,6 +1,6 @@
 {
   "name": "@hunteroi/discord-form",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A manager to question people in DM or via a thread channel. Built with DiscordJS.",
   "main": "lib/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "discord.js": "^14.6.0"
+    "discord.js": "14.x"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
