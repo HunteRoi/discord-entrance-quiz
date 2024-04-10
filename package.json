@@ -1,16 +1,29 @@
 {
-  "name": "@hunteroi/discord-form",
-  "version": "1.1.0",
-  "description": "A manager to question people in DM or via a thread channel. Built with DiscordJS.",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "tsc",
-    "build:docs": "typedoc",
-    "prepublish": "yarn build:docs",
-    "lint": "tslint -p tsconfig.json",
-    "start": "yarn build & node ./examples/index.js"
+  "author": "HunteRoi <me@tinaeldevresse.eu> (https://tinaeldevresse.eu)",
+  "bugs": {
+    "url": "https://github.com/HunteRoi/discord-form/issues"
   },
-  "repository": "git://github.com/hunteroi/discord-form.git",
+  "description": "A manager to question people in DM or via a thread channel. Built with DiscordJS.",
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^20.12.7",
+    "discord.js": "^14.14.1",
+    "eslint": "^9.0.0",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.4.4",
+    "typescript-eslint": "^7.6.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "node": ">=20.x"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "funding": "https://github.com/sponsors/hunteroi",
+  "homepage": "https://github.com/HunteRoi/discord-form#readme",
   "keywords": [
     "discordjs",
     "discordbot",
@@ -18,32 +31,20 @@
     "quiz",
     "sphinx"
   ],
-  "author": "HunteRoi <me@tinaeldevresse.eu> (https://tinaeldevresse.eu)",
-  "funding": "https://github.com/sponsors/hunteroi",
-  "engines": {
-    "node": ">=16.6.0"
-  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/HunteRoi/discord-form/issues"
-  },
-  "homepage": "https://github.com/HunteRoi/discord-form#readme",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib/**/*"
-  ],
-  "dependencies": {
+  "main": "lib/index.js",
+  "name": "@hunteroi/discord-form",
+  "peerDependencies": {
     "discord.js": "14.x"
   },
-  "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "@typescript-eslint/parser": "^5.43.0",
-    "eslint": "^8.27.0",
-    "eslint-config-prettier": "^8.5.0",
-    "typedoc": "^0.23.21",
-    "typescript": "^4.8.4"
-  }
+  "repository": "git://github.com/hunteroi/discord-form.git",
+  "scripts": {
+    "build": "tsc",
+    "build:docs": "typedoc",
+    "lint": "eslint ./src",
+    "prepublish": "yarn lint && yarn build && yarn build:docs",
+    "start": "yarn build & node ./examples/index.js"
+  },
+  "type": "module",
+  "version": "1.1.2"
 }
