@@ -149,6 +149,7 @@ export class FormManager extends EventEmitter {
                     answer: entry.parser(
                         interaction.fields.getTextInputValue(entry.customId),
                     ),
+                    raw: interaction.fields.getTextInputValue(entry.customId),
                 }) as FormEntry,
         );
 

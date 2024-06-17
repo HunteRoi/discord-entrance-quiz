@@ -39,6 +39,14 @@ export interface FormEntryBase<T>
      * @memberof FormEntryBase
      */
     answer?: T;
+
+    /**
+     * The raw value of the entry.
+     *
+     * @type {string}
+     * @memberof FormEntryBase
+     */
+    raw?: string;
 }
 
 /**
