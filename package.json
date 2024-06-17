@@ -43,6 +43,6 @@
     "prepublish": "yarn lint && yarn build && yarn build:docs",
     "start": "yarn build & node ./examples/index.js"
   },
-  "type": "module",
-  "version": "1.1.2"
+  "type": "commonjs",
+  "version": "1.2.0"
 }

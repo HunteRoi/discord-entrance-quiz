@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, Partials, ButtonStyle, TextInputStyle } = require('discord.js');
+const { Client, IntentsBitField, Partials, TextInputStyle } = require('discord.js');
 
 const { FormManager, FormManagerEvents } = require('../lib');
 
