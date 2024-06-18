@@ -14,9 +14,9 @@ import {
     type User,
 } from "discord.js";
 
-import { FormManagerEvents } from "./FormManagerEvents";
-import type { FormEntry, FormManagerOptions } from "./types";
-import type { OneToFiveElements } from "./types/OneToFiveElements";
+import { FormManagerEvents } from "./FormManagerEvents.js";
+import type { OneToFiveElements } from "./types/OneToFiveElements.js";
+import type { FormEntry, FormManagerOptions } from "./types/index.js";
 
 /**
  * A manager to send a form to users through DM.

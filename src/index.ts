@@ -1,3 +1,3 @@
-export * from "./FormManager";
-export * from "./FormManagerEvents";
-export * from "./types";
+export * from "./FormManager.js";
+export * from "./FormManagerEvents.js";
+export * from "./types/index.js";

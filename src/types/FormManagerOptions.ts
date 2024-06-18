@@ -1,6 +1,7 @@
 import type { MessageCreateOptions, MessageEditOptions } from "discord.js";
-import type { FormEntry } from "./FormEntry";
-import type { OneToFiveElements } from "./OneToFiveElements";
+
+import type { FormEntry } from "./FormEntry.js";
+import type { OneToFiveElements } from "./OneToFiveElements.js";
 
 /**
  * The manager options.

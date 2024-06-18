@@ -1,6 +1,6 @@
 import { Client, IntentsBitField, Partials, TextInputStyle } from "discord.js";
 
-import { FormManager, FormManagerEvents } from "../lib";
+import { FormManager, FormManagerEvents } from "../lib/index.js";
 
 const client = new Client({
     intents: [IntentsBitField.Flags.DirectMessages],

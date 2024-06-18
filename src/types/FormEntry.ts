@@ -8,7 +8,10 @@ import type { TextInputComponentData } from "discord.js";
  * @template T
  */
 export interface FormEntryBase<T>
-    extends Omit<TextInputComponentData, "label" & "value" & "customId" & "type"> {
+    extends Omit<
+        TextInputComponentData,
+        "label" & "value" & "customId" & "type"
+    > {
     /**
      * The id of the entry.
      *
@@ -91,4 +94,7 @@ export interface NumberFormEntry extends FormEntryBase<number> {
 /**
  * A form entry, either boolean, string or number.
  */
-export type FormEntry = Omit<BooleanFormEntry | StringFormEntry | NumberFormEntry, "type">;
+export type FormEntry = Omit<
+    BooleanFormEntry | StringFormEntry | NumberFormEntry,
+    "type"
+>;
