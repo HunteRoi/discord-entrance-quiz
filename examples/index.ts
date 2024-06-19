@@ -1,0 +1,48 @@
+import { Client, IntentsBitField, Partials, TextInputStyle } from "discord.js";
+
+import { FormManager, FormManagerEvents } from "../lib/index.js";
+
+const client = new Client({
+    intents: [IntentsBitField.Flags.DirectMessages],
+    partials: [Partials.Channel, Partials.Message],
+});
+const manager = new FormManager(client, {
+    buttonLabel: 'TAKE QUIZ',
+    formTitle: 'Quiz Form',
+    formResponseWhenSubmitted: 'Participation registered.',
+    introductionMessage: 'Take our quiz and try to win a reward!',
+    formEntries: [
+        {
+            label: 'How old are you?',
+            parser: (value) => Number(value),
+            responseType: 'number',
+            style: TextInputStyle.Short,
+            maxLength: 3,
+            minLength: 1,
+            required: true,
+            customId: 'age'
+        },
+    ],
+});
+
+client.once('ready', () => console.log('Connected!'));
+
+client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
+
+    if (message.author.id === 'USERID') {
+        await manager.sendFormButtonTo(message.author);
+    }
+});
+
+manager.on(FormManagerEvents.sendFormButton, (user) =>
+    console.log(`Form sent to ${user.username}`)
+);
+manager.on(FormManagerEvents.formOpen, (user) =>
+    console.log(`Form opened by ${user.username}`)
+);
+manager.on(FormManagerEvents.formSubmit, (entries, user) =>
+    console.log(`Answers from ${user.username}`, entries)
+);
+
+client.login('TOKEN');
